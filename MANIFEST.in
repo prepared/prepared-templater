@@ -1,0 +1,3 @@
+recursive-include prepared_templater/static *
+recursive-include prepared_templater/templates *
+recursive-include prepared_templater/locale *
