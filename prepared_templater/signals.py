@@ -18,5 +18,24 @@ def control_nav_orga_import(sender, request=None, **kwargs):
             }),
             'active': (url.namespace == 'plugins:prepared_templater:import' and url.url_name == 'import'),
             'icon': 'clone',
+            'children': [
+                {
+                    'label': _('Manage Event Templates'),
+                    'url': reverse('plugins:prepared_templater:import', kwargs={
+                        'organizer': request.organizer.slug,
+                    }),
+                    'active': (url.namespace == 'plugins:prepared_templater:import' and url.url_name == 'import'),
+                    'icon': 'clone',
+                },
+                {
+                    'label': _('Create new Events'),
+                    'url': reverse('plugins:prepared_templater:import', kwargs={
+                        'organizer': request.organizer.slug,
+                    }),
+                    'active': (url.namespace == 'plugins:prepared_templater:import' and url.url_name == 'import'),
+                    'icon': 'clone',
+                }
+
+            ]
         }
     ]
