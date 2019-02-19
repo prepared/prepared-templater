@@ -1,0 +1,18 @@
+{% extends "pretixcontrol/base.html" %}
+{% load i18n %}
+{% load bootstrap3 %}
+{% block title %}{% trans "List Event Templates" %}{% endblock %}
+{% block content %}
+    <h1>{% trans "Event Templates" %}</h1>
+    {% if event_templates|length == 0 %}
+        <div class="empty-collection">
+            <p>
+                {% blocktrans trimmed %}
+                    Nobody ordered a ticket yet.
+                {% endblocktrans %}
+            </p>
+
+
+        </div>
+    {% endif %}
+{% endblock %}

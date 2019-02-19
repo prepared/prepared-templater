@@ -13,26 +13,26 @@ def control_nav_orga_import(sender, request=None, **kwargs):
     return [
         {
             'label': _('Event Templates'),
-            'url': reverse('plugins:prepared_templater:import', kwargs={
+            'url': reverse('plugins:prepared_templater:manage_event_templates', kwargs={
                 'organizer': request.organizer.slug,
             }),
-            'active': (url.namespace == 'plugins:prepared_templater:import' and url.url_name == 'import'),
+            'active': (url.namespace == 'plugins:prepared_templater:manage_event_templates' and url.url_name == 'manage_event_templates'),
             'icon': 'clone',
             'children': [
                 {
                     'label': _('Manage Event Templates'),
-                    'url': reverse('plugins:prepared_templater:import', kwargs={
+                    'url': reverse('plugins:prepared_templater:manage_event_templates', kwargs={
                         'organizer': request.organizer.slug,
                     }),
-                    'active': (url.namespace == 'plugins:prepared_templater:import' and url.url_name == 'import'),
+                    'active': (url.namespace == 'plugins:prepared_templater:manage_event_templates' and url.url_name == 'manage_event_templates'),
                     'icon': 'clone',
                 },
                 {
-                    'label': _('Create new Events'),
-                    'url': reverse('plugins:prepared_templater:import', kwargs={
+                    'label': _('Manage Events'),
+                    'url': reverse('plugins:prepared_templater:manage_events', kwargs={
                         'organizer': request.organizer.slug,
                     }),
-                    'active': (url.namespace == 'plugins:prepared_templater:import' and url.url_name == 'import'),
+                    'active': (url.namespace == 'plugins:prepared_templater:manage_events' and url.url_name == 'manage_events'),
                     'icon': 'clone',
                 }
 

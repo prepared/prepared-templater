@@ -14,7 +14,7 @@ from django.utils.timezone import now
 from django.utils.translation import ugettext as _
 from django.views.generic import DetailView, ListView, View
 
-from pretix.base.models import Order, OrderPayment, Quota
+from pretix.base.models import Organizer
 from pretix.base.services.mail import SendMailException
 from pretix.base.settings import SettingsSandbox
 from pretix.base.templatetags.money import money_filter
@@ -22,9 +22,6 @@ from pretix.control.permissions import (
     EventPermissionRequiredMixin, OrganizerPermissionRequiredMixin,
 )
 from pretix.control.views.organizer import OrganizerDetailViewMixin
-from pretix.plugins.banktransfer import csvimport, mt940import
-from pretix.plugins.banktransfer.models import BankImportJob, BankTransaction
-from pretix.plugins.banktransfer.tasks import process_banktransfers
 
 logger = logging.getLogger('pretix.plugins.prepared_templater')
 
@@ -33,12 +30,23 @@ from django.views import View
 
 from prepared_templater.models import EventTemplate, SyncedEvent
 
-class HelloWorld(View):
-    def get(self, *args, **kwargs):
-        # <view logic>
-        return HttpResponse('HelloWorld')
+class EventTemplates(ListView):
+    model = EventTemplate
+    context_object_name = 'event_templates'
+    template_name = 'manage_templates_list.html'
+    permission = 'has_organizer_permission'
 
-class EventTemplates(View):
+    def get_queryset(self):
+        if 'organizer' in self.kwargs:
+            organizer_id = Organizer.objects.get(slug=self.kwargs['organizer'])
+            qs = EventTemplate.objects.filter(
+                organizer=organizer_id
+            )
+
+        return qs
+
+
+class TemplatedEvents(View):
     def get(self, *args, **kwargs):
         if 'organizer' in self.kwargs:
             return HttpResponse('yay')
